@@ -31,8 +31,23 @@ const PhotoDetailsModal = ({ photo, closeModal }) => {
           className="photo-details-modal__image"
         />
       </div>
+      {photo.similar_photos && (
+        <div className="photo-details-modal__similar-photos">
+          <h3>Similar Photos</h3>
+          <div className="photo-details-modal__similar-photos-list">
+            {Object.values(photo.similar_photos).map((similarPhoto, index) => (
+              <img
+                key={index}
+                src={similarPhoto.urls.regular}
+                alt={`Similar photo ${index + 1}`}
+                className="photo-details-modal__similar-photo"
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 };
 
 export default PhotoDetailsModal;
