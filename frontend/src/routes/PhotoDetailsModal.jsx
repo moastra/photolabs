@@ -2,8 +2,10 @@ import React from 'react';
 
 import '../styles/PhotoDetailsModal.scss'
 import closeSymbol from '../assets/closeSymbol.svg';
+import PhotoFavButton from 'components/PhotoFavButton';
+import PhotoList from 'components/PhotoList';
 
-const PhotoDetailsModal = ({ photo, closeModal }) => {
+const PhotoDetailsModal = ({ photo, closeModal, isFavorite, toggleFavorite }) => {
   return (
     <div className="photo-details-modal">
       <button className="photo-details-modal__close-button" onClick={closeModal}>
@@ -23,6 +25,10 @@ const PhotoDetailsModal = ({ photo, closeModal }) => {
             </div>
           </div>
         </div>
+        <PhotoFavButton
+          isFavorite={isFavorite}
+          onClick={() => toggleFavorite(photo.id)}
+        />
       </div>
       <div className="photo-details-modal__images">
         <img
@@ -34,16 +40,7 @@ const PhotoDetailsModal = ({ photo, closeModal }) => {
       {photo.similar_photos && (
         <div className="photo-details-modal__similar-photos">
           <h3>Similar Photos</h3>
-          <div className="photo-details-modal__similar-photos-list">
-            {Object.values(photo.similar_photos).map((similarPhoto, index) => (
-              <img
-                key={index}
-                src={similarPhoto.urls.regular}
-                alt={`Similar photo ${index + 1}`}
-                className="photo-details-modal__similar-photo"
-              />
-            ))}
-          </div>
+          <PhotoList photos={Object.values(photo.similar_photos)} />
         </div>
       )}
     </div>

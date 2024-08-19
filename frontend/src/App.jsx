@@ -13,6 +13,7 @@ import './App.scss';
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [favoritePhotos, setFavoritePhotos] = useState([]);
 
   const openModal = (photo) => {
     setSelectedPhoto(photo);
@@ -24,11 +25,30 @@ const App = () => {
     setSelectedPhoto(null);
   };
 
+  const toggleFavorite = (photoId) => {
+    setFavoritePhotos((prevFavorites) =>
+      prevFavorites.includes(photoId)
+        ? prevFavorites.filter((id) => id !== photoId)
+        : [...prevFavorites, photoId]
+    );
+  };
+
   return (
     <div className="App">
-    <HomeRoute photos={photos} topics={topics} openModal={openModal} />
-    {isModalOpen && (
-      <PhotoDetailsModal photo={selectedPhoto} closeModal={closeModal} />
+    <HomeRoute
+      photos={photos}
+      topics={topics}
+      openModal={openModal}
+      toggleFavorite={toggleFavorite}
+      favoritePhotos={favoritePhotos}
+    />
+    {isModalOpen && selectedPhoto && (
+      <PhotoDetailsModal
+        photo={selectedPhoto}
+        closeModal={closeModal}
+        isFavorite={favoritePhotos.includes(selectedPhoto.id)}
+        toggleFavorite={toggleFavorite}
+      />
     )}
     </div>
   );
