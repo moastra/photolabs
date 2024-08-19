@@ -2,12 +2,17 @@ import React from "react";
 import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
 
-const PhotoListItem = ({ photo, isFavorite, toggleFavorite }) => {
+const PhotoListItem = ({ photo, isFavorite, toggleFavorite, openModal }) => {
+  const handleFavButtonClick = (event) => {
+    event.stopPropagation();
+    toggleFavorite(photo.id);
+  };
+
   return (
-    <div className="photo-list__item">
+    <div className="photo-list__item" onClick={openModal}>
       <PhotoFavButton 
       isFavorite={isFavorite}
-      onClick={() => toggleFavorite(photo.id)}
+      onClick={handleFavButtonClick}
       />
       <img src={photo.urls.regular} alt="Photo" className="photo-list__image" />
       <div className="photo-list__user-details">

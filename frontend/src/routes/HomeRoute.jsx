@@ -6,7 +6,7 @@ import '../styles/HomeRoute.scss';
 
 
 
-const HomeRoute = ({ photos, topics}) => {
+const HomeRoute = ({ photos, topics, openModal}) => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
 
   const toggleFavorite = (photoId) => {
@@ -24,6 +24,7 @@ const HomeRoute = ({ photos, topics}) => {
       photos={photos}
       favoritePhotos={favoritePhotos}
       toggleFavorite={toggleFavorite}
+      openModal={openModal}
        />
     </div>
   );
