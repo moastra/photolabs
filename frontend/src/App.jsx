@@ -41,13 +41,13 @@ const sampleDataForPhotoListItem = [
 const App = () => {
   return (
     <div className="App">
-      {sampleDataForPhotoListItem.map((photo) => (
+      {sampleDataForPhotoListItem.map(({ id, imageSource, profile, username, location }) => (
         <PhotoListItem
-        key={photo.id}
-        imageSource={photo.imageSource}
-        profile={photo.profile}
-        username={photo.username}
-        location={photo.location}
+        key={id}
+        imageSource={imageSource}
+        profile={profile}
+        username={username}
+        location={location}
         />
       ))}
     </div>
