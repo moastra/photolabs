@@ -6,17 +6,7 @@ import '../styles/HomeRoute.scss';
 
 
 
-const HomeRoute = ({ photos, topics, openModal}) => {
-  const [favoritePhotos, setFavoritePhotos] = useState([]);
-
-  const toggleFavorite = (photoId) => {
-    setFavoritePhotos((prevFavorites) =>
-      prevFavorites.includes(photoId)
-        ? prevFavorites.filter((id) => id !== photoId)
-        : [...prevFavorites, photoId]
-    );
-  };
-
+const HomeRoute = ({ photos, topics, openModal, favoritePhotos, toggleFavorite }) => {
   return (
     <div className="home-route">
       <TopNavigation topics={topics} favoriteCount={favoritePhotos.length} />
