@@ -48,6 +48,7 @@ const App = () => {
         closeModal={closeModal}
         isFavorite={favoritePhotos.includes(selectedPhoto.id)}
         toggleFavorite={toggleFavorite}
+        favoritePhotos={favoritePhotos}
       />
     )}
     </div>
