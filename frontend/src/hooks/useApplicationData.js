@@ -7,7 +7,8 @@ export const ACTIONS = {
   SET_TOPIC_DATA: "SET_TOPIC_DATA",
   SELECT_PHOTO: "SELECT_PHOTO",
   DISPLAY_PHOTO_DETAILS: "DISPLAY_PHOTO_DETAILS",
-  CLOSE_PHOTO_DETAILS: "CLOSE_PHOTO_DETAILS"
+  CLOSE_PHOTO_DETAILS: "CLOSE_PHOTO_DETAILS",
+  SET_PHOTOS_BY_TOPIC: "SET_PHOTOS_BY_TOPIC"
 };
 
 const initialState = {
@@ -38,13 +39,19 @@ function reducer(state, action) {
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
-        photoData: action.payload
+        photoData: Array.isArray(action.payload) ? action.payload: []
       };
 
     case ACTIONS.SET_TOPIC_DATA:
       return {
         ...state,
         topicData: action.payload
+      };
+
+    case ACTIONS.SET_PHOTOS_BY_TOPIC:
+      return {
+        ...state,
+        photoData: Array.isArray(action.payload) ? action.payload: []
       };
 
     case ACTIONS.SELECT_PHOTO:
@@ -106,12 +113,27 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics } });
   };
 
+  const fetchPhotosByTopic = (topicId) => {
+    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Photos fetched for topic:", data);
+        if (Array.isArray(data)) {
+          dispatch({ type: ACTIONS.SET_PHOTOS_BY_TOPIC, payload: data });
+        } else {
+          console.error("Expected an array of photos, but got:", data);
+        }
+      })
+      .catch((error) => console.error(`Error fetching photos for topic ${topicId}:`, error));
+  };
+
   return {
     state,
     onPhotoSelect,
     updateToFavPhotoIds,
     onLoadTopic,
-    onClosePhotoDetailModal
+    onClosePhotoDetailModal,
+    fetchPhotosByTopic
   };
 };
 

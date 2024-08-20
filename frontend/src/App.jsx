@@ -13,7 +13,8 @@ const App = () => {
     onPhotoSelect,
     updateToFavPhotoIds,
     onLoadTopic,
-    onClosePhotoDetailModal
+    onClosePhotoDetailModal,
+    fetchPhotosByTopic
   } = useApplicationData();
 
   return (
@@ -25,6 +26,7 @@ const App = () => {
       toggleFavorite={updateToFavPhotoIds}
       favoritePhotos={state.favoritePhotos}
       onLoadTopic={onLoadTopic}
+      fetchPhotosByTopic={fetchPhotosByTopic}
     />
     {state.isModalOpen && state.selectedPhoto && (
       <PhotoDetailsModal
