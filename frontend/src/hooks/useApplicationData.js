@@ -1,6 +1,4 @@
-import { useReducer } from "react";
-import photos from "mocks/photos";
-import topics from "mocks/topics";
+import { useReducer, useEffect } from "react";
 
 export const ACTIONS = {
   FAV_PHOTO_ADDED: "FAV_PHOTO_ADDED",
@@ -16,8 +14,8 @@ const initialState = {
   isModalOpen: false,
   selectedPhoto: null,
   favoritePhotos: [],
-  photos: photos,
-  topics: topics
+  photoData: [],
+  topicData: []
 };
 
 
@@ -40,25 +38,19 @@ function reducer(state, action) {
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
-        photos: action.payload.photos
+        photoData: action.payload
       };
 
     case ACTIONS.SET_TOPIC_DATA:
       return {
         ...state,
-        topics: action.payload.topics
+        topicData: action.payload
       };
 
     case ACTIONS.SELECT_PHOTO:
       return {
         ...state,
         selectedPhoto: action.payload.photo,
-        isModalOpen: true
-      };
-
-    case ACTIONS.DISPLAY_PHOTO_DETAILS:
-      return {
-        ...state,
         isModalOpen: true
       };
 
@@ -79,7 +71,20 @@ function reducer(state, action) {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Dispatch functions for each action
+  useEffect(() => {
+    fetch("/api/photos")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload:data }))
+      .catch((error) => console.error("Error fetching photos:", error));
+  }, []);
+
+  useEffect(() =>{
+    fetch("/api/topics")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data}))
+      .catch((error) => console.error("Error fetching topics:", error));
+  }, []);
+
   const updateToFavPhotoIds = (photoId) => {
     if (state.favoritePhotos.includes(photoId)) {
       dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: { photoId } });

@@ -4,7 +4,7 @@ import "../styles/PhotoList.scss";
 
 
 
-const PhotoList = ({photos, favoritePhotos = [], toggleFavorite, openModal}) => {
+const PhotoList = ({photos = [], favoritePhotos = [], toggleFavorite, openModal}) => {
   return (
     <ul className="photo-list">
       {photos.map(( photo ) =>(

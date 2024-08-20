@@ -19,8 +19,8 @@ const App = () => {
   return (
     <div className="App">
     <HomeRoute
-      photos={state.photos}
-      topics={state.topics}
+      photos={state.photoData}
+      topics={state.topicData}
       openModal={onPhotoSelect}
       toggleFavorite={updateToFavPhotoIds}
       favoritePhotos={state.favoritePhotos}
